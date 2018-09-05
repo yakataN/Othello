@@ -190,14 +190,14 @@ n.times do |i|
   end
   put_the_stone(x, y, color,board)
   board_now(board)
-  if sirokuro_hantei(board,color) == "white"
-    puts("次は白番です")
-  elsif sirokuro_hantei(board,color) == "black"
-    puts("次は黒番です")
-  else
-    puts("白も黒も置けないので終了です")
-    break
-  end
+  # if sirokuro_hantei(board,color) == "white"
+  #   puts("次は白番です")
+  # elsif sirokuro_hantei(board,color) == "black"
+  #   puts("次は黒番です")
+  # else
+  #   puts("白も黒も置けないので終了です")
+  #   break
+  # end
 end
 
 # 枚数を数えてwinloseを出力
