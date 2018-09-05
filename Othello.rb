@@ -2,10 +2,13 @@
 
 # 現状のboardを出力する
 def board_now(board)
-  puts "     board     "
-  puts "----------------"
+  puts "      board     "
+  puts " １２３４５６７８"
+  puts " ----------------"
+  i = 1
   board.each do |line|
     tmp = []
+    tmp << i
     line.each do |num|
       if num == 0
         tmp << "〇"
@@ -16,8 +19,9 @@ def board_now(board)
       end
     end
     puts tmp.join
+    i += 1
   end
-  puts "----------------"
+  puts " ----------------"
   b_num = "%#02d" % board.flatten.count(0)
   w_num = "%#02d" % board.flatten.count(1)
   puts "Black #{b_num}:#{w_num} White"
@@ -50,7 +54,7 @@ def reverse(ranges,color,board)
   end
 end
 
-# 石が置かれたときの処理を書く
+# 石が置かれたときの石をひっくり返す処理を書く
 def put_the_stone(x,y, color,board)
   # color: W or B
   board[x][y] = color
@@ -129,7 +133,21 @@ def put_the_stone(x,y, color,board)
   reverse(ranges,color,board)
 end
 
-# 盤面を作る
+# つぎに石を置くのが白か黒か判定する（未実装）
+def sirokuro_hantei(board,color)
+  # 0:kuro
+  # 1:white
+  for i in 0..7
+    for j in 0..7
+      if board[i][j] == " "
+      end
+    end
+  end
+end
+
+#############
+# 盤面を作る #
+#############
 # board[tate][yoko]で指定
 # B:0
 # W:1
@@ -143,23 +161,43 @@ board[3][4] = 0
 board[4][3] = 0
 
 
+#############
+# intro表示 #
+#############
 board_now(board)
 puts "色　縦　横で指定してください（1order）"
 puts "例： B 4 3"
 puts "例： W 1 1"
 # input
+# 将来的にはwhile true
 n = 60
 n.times do |i|
   tmp = gets.chomp.split
+  # p tmp
   x = tmp[1].to_i-1
   y = tmp[2].to_i-1
+  puts
   if tmp[0] == "B"
     color = 0
   elsif tmp[0] == "W"
     color = 1
+  elsif tmp == []
+    puts("石をおいてください")
+  elsif board[x][y] != " "
+    puts("既に置かれているところには置けません")
+  else
+    puts("その操作は行えません")
   end
   put_the_stone(x, y, color,board)
   board_now(board)
+  if sirokuro_hantei(board,color) == "white"
+    puts("次は白番です")
+  elsif sirokuro_hantei(board,color) == "black"
+    puts("次は黒番です")
+  else
+    puts("白も黒も置けないので終了です")
+    break
+  end
 end
 
 # 枚数を数えてwinloseを出力
